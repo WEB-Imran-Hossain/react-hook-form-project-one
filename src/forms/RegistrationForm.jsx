@@ -64,6 +64,24 @@ const RegistrationForm = () => {
                         />
                     </Field>
 
+                    {/* age section */}
+                    <Field label="Age" error={errors.age}>
+                        <input
+                            {...register("age", {
+                                required: "Age is required.",
+                                max: {
+                                    value: 100,
+                                    message: "Age must be between 0 and 100",
+                                }
+                            })}
+                            className={`p-2 border box-border w-[300px] rounded-md ${!!errors.age ? "border-red-500" : "border-gray-200"}`}
+                            type="number"
+                            name="age"
+                            id="age"
+                            placeholder="Enter your Age"
+
+                        />
+                    </Field>
                 </FieldSet>
                 <div>{errors?.root?.random?.message}</div>
                 <Field>

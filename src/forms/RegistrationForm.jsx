@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import FieldSet from "../components/FieldSet";
 import Field from "../components/Field";
 import { useForm } from 'react-hook-form'
 
-const LoginForm = () => {
+const RegistrationForm = () => {
     const {
         register,
         handleSubmit,
@@ -11,29 +11,28 @@ const LoginForm = () => {
         setError,
     } = useForm()
 
-
     const submitForm = (formData) => {
         console.log(formData);
-
-        const user = { email: 'x@example.com', password: '123456789' }
-
-        const found = formData.email === user.email && formData.password === user.password;
-
-        if (!found) {
-            setError("root.random", {
-                message: `User with email '${formData.email}' is not found`,
-                type: "random"
-            })
-        }
-
-
     }
-
 
     return (
         <div className="flex flex-col justify-center items-center w-screen h-screen">
             <form onSubmit={handleSubmit(submitForm)}>
-                <FieldSet label="Enter Login Details">
+                <FieldSet label="Enter Your Details">
+                    {/* name section */}
+                    <Field label="Full Name" error={errors.fname}>
+                        <input
+                            {...register("fname", {
+                                required: "Full Name is required.",
+                            })}
+                            className={`p-2 border box-border w-[300px] rounded-md ${!!errors.fname ? "border-red-500" : "border-gray-200"}`}
+                            type="text"
+                            name="fname"
+                            id="fname"
+                            placeholder="Enter your Full Name"
+
+                        />
+                    </Field>
                     {/* email section */}
                     <Field label="Email" error={errors.email}>
                         <input
@@ -64,11 +63,12 @@ const LoginForm = () => {
 
                         />
                     </Field>
+
                 </FieldSet>
                 <div>{errors?.root?.random?.message}</div>
                 <Field>
                     <button className="text-md text-white cursor-pointer p-1 border rounded-lg bg-purple-500 m-auto">
-                        Login
+                        Registration
                     </button>
                 </Field>
             </form>
@@ -76,4 +76,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default RegistrationForm;

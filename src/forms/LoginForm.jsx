@@ -1,16 +1,30 @@
 import React from "react";
 import FieldSet from "../components/FieldSet";
 import Field from "../components/Field";
+import { useForm } from 'react-hook-form'
 
 const LoginForm = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm()
+
+
+    const submitForm = (formData) => {
+        console.log(formData);
+    }
+
+
     return (
-        <div>
-            <form>
+        <div className="flex flex-col justify-center items-center w-screen h-screen">
+            <form onSubmit={handleSubmit(submitForm)}>
                 <FieldSet label="Enter Login Details">
                     {/* email section */}
-                    <Field label="Email">
+                    <Field label="Email" error={errors.email}>
                         <input
-                            className="p-2 border box-border w-[300px] rounded-md border-gray-200"
+                            {...register("email", { required: "Email is required." })}
+                            className={`p-2 border box-border w-[300px] rounded-md ${!!errors.email ? "border-red-500" : "border-gray-200"}`}
                             type="email"
                             name="email"
                             id="email"
@@ -19,9 +33,16 @@ const LoginForm = () => {
                         />
                     </Field>
                     {/* pasword section */}
-                    <Field label="Password">
+                    <Field label="Password" error={errors.password}>
                         <input
-                            className="p-2 border box-border w-[300px] rounded-md border-gray-200"
+                            {...register("password", {
+                                required: "Password is required.",
+                                minLength: {
+                                    value: 8,
+                                    message: "Your password must be at least 8 characters",
+                                }
+                            })}
+                            className={`p-2 border box-border w-[300px] rounded-md ${!!errors.password ? "border-red-500" : "border-gray-200"}`}
                             type="password"
                             name="password"
                             id="password"
